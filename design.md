@@ -49,3 +49,25 @@ Original Strength Wordleologist offered three types of hints, which calculated a
 
  - Users should be able to turn on hard mode (in hard mode, you can only guess words on the remaining word list. This changes the list of words that can be suggested by the hint engine)
  - You need to be able to reset the game
+
+
+## Modeling Wordle
+The state of a Wordle game can be modeled with the following things:
+
+ - A group of five sets, each containing the letters that could be present at each position in the target word
+ - A set of letters that must be present in the target word
+
+ - **Gray Letters**: gray letters cannot appear in the target word. Gray letters should be removed from all 5 position sets
+ - **Yellow Letters**: yellow letters must appear in the target word, but not at that position. These should be added to the set of required letters, but removed from the position set at the position where it was guessed
+ - **Green Letters**: green letters are present in the target word, at the position where they were guessed. These should replace the corresponding position set with a set containing only the guessed letter.
+
+
+### Special Conditions
+Wordle has some subtle behavior when a guessed word has multiple instances of the same letter.
+If, for instance, the guessed word has two Ts, and there is one T in the target word, Wordle will show one of the guessed Ts as yellow (or green), but the other will be gray.
+This needs to be handled specifically in the code, because marking the same letter as Gray and Yellow according to the above rules will result in a game state that is impossible to complete. 
+
+I didn't actually do this in original strength wordleologist, so I don't have a solution ready to go, but there are a few things we can do.
+Option 1: Ignore Gray letters that are already yellow letters. If a gray letter appears in the set of required letters, take no action. This will require us to always process Yellow letters before gray letters.
+Option 2: detect guessed words with repeated letters, and do something fancy with the information they generate.
+Option 3: (option 2+) Add something to state that keeps track of the number of instances in each letter in the target word. And then also do something special with double letter guessed words to update the counters.

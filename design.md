@@ -71,3 +71,13 @@ I didn't actually do this in original strength wordleologist, so I don't have a 
 Option 1: Ignore Gray letters that are already yellow letters. If a gray letter appears in the set of required letters, take no action. This will require us to always process Yellow letters before gray letters.
 Option 2: detect guessed words with repeated letters, and do something fancy with the information they generate.
 Option 3: (option 2+) Add something to state that keeps track of the number of instances in each letter in the target word. And then also do something special with double letter guessed words to update the counters.
+
+
+
+## Colors
+These are the colors used on the wordle website
+
+ - **Green:** 6AAA64
+ - **Gray:** 787C7E
+ - **Yellow:** C9B458
+
